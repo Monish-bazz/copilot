@@ -1112,6 +1112,22 @@ def compose_answer(state: AgentState, config: RunnableConfig) -> dict:
         f"\nRESOLVER: confidence={resolution.get('confidence')}, "
         f"needs_human={resolution.get('needs_human')}, why={resolution.get('explanation')}",
     ]
+
+    # For product issues and security, the answer lives in the retrieved text,
+    # not in a numeric calculation. Include all retrieved excerpts.
+    intent_str = state.get("intent") or ""
+    if intent_str in (Intent.PRODUCT_ISSUE.value, Intent.SECURITY.value, Intent.GENERAL.value):
+        all_citations = state.get("citations") or []
+        relevant_excerpts = [
+            {"source": c.get("title"), "excerpt": c.get("excerpt", "")}
+            for c in all_citations
+            if (c.get("authority") or 0) >= 20 and c.get("excerpt")
+        ]
+        if relevant_excerpts:
+            parts.append(
+                f"\nRETRIEVED DOCUMENT EXCERPTS (use these to compose your answer):\n"
+                f"{json.dumps(relevant_excerpts[:8], indent=2, default=str)}"
+            )
     if exec_res:
         parts.append(f"\nACTION RESULT:\n{json.dumps(exec_res, indent=2, default=str)}")
     if state.get("pending_draft"):
@@ -1202,6 +1218,33 @@ def _fallback_structured(state: AgentState) -> StructuredAnswer:
             reasoning=f"Elapsed: {computed.get('elapsed_minutes', 0)} min vs target {target} min ({computed.get('target_source', 'standard')}).",
             confidence="high",
             suggested_action="Escalate immediately." if breached else None,
+        )
+
+    elif kind == "product_issue":
+        # Build the answer from the retrieved citations
+        citations = state.get("citations") or []
+        relevant = [c for c in citations if (c.get("authority") or 0) >= 50 and c.get("excerpt")]
+        if relevant:
+            excerpts = "\n".join(f"- {c.get('title', '')}: {c.get('excerpt', '')[:200]}" for c in relevant[:5])
+            return StructuredAnswer(
+                verdict="See the retrieved product documentation for details on this issue.",
+                reasoning=excerpts,
+                confidence=resolution.get("confidence", "high"),
+                citations=[{"title": c.get("title", ""), "excerpt": c.get("excerpt", "")[:150], "authority": c.get("authority", 0), "status": "current"} for c in relevant[:3]],
+            )
+        return StructuredAnswer(
+            verdict="This appears to be a product issue. Please consult the Product Operations Guide for known issues and workarounds.",
+            reasoning="No specific product documentation excerpt was retrieved.",
+            confidence="medium",
+            suggested_action="Escalate to product team if the issue persists.",
+        )
+
+    elif kind == "security":
+        return StructuredAnswer(
+            verdict="This is a security incident requiring immediate escalation.",
+            reasoning="Security incidents involving credential exposure must be escalated immediately per Support Policy v3.",
+            confidence="high",
+            suggested_action="Rotate the exposed credentials immediately and create an escalation.",
         )
 
     return StructuredAnswer(
