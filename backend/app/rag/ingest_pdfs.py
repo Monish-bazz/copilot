@@ -5,8 +5,8 @@ import pdfplumber
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_postgres import PGVector
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from app.config import RAW_DIR, DATABASE_URL
+from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings
+from app.config import RAW_DIR, DATABASE_URL, NVIDIA_API_KEY, NIM_BASE_URL
 
 
 def _get_db_url():
@@ -15,12 +15,20 @@ def _get_db_url():
         db_url = db_url.replace("postgres://", "postgresql+psycopg://", 1)
     elif db_url and db_url.startswith("postgresql://"):
         db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+        
+    if db_url and ":6543" in db_url:
+        db_url = db_url.replace(":6543", ":5432")
+        
     return db_url
 
 
 @functools.lru_cache(maxsize=1)
 def get_vector_store():
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    embeddings = NVIDIAEmbeddings(
+        model="nvidia/nv-embedqa-e5-v5",
+        nvidia_api_key=NVIDIA_API_KEY,
+        base_url=NIM_BASE_URL,
+    )
     db_url = _get_db_url()
 
     vectorstore = PGVector(

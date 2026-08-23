@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
+import httpx
 
 from app.auth import get_user_by_token, UserContext
 from app.agent.graph import graph
@@ -27,6 +28,29 @@ app.add_middleware(
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend")
 if os.path.exists(frontend_dir):
     app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
+
+
+
+
+async def self_ping_loop(url: str):
+    # Wait a bit on startup before first ping
+    await asyncio.sleep(10)
+    async with httpx.AsyncClient() as client:
+        while True:
+            try:
+                resp = await client.get(f"{url.rstrip('/')}/health")
+                print(f"Self-ping successful: {resp.status_code}")
+            except Exception as e:
+                print(f"Self-ping failed: {e}")
+            await asyncio.sleep(600)  # Ping every 10 minutes (600 seconds)
+
+
+@app.on_event("startup")
+async def startup_event():
+    public_url = os.environ.get("PUBLIC_URL")
+    if public_url:
+        print(f"Starting self-ping task targeting: {public_url}")
+        asyncio.create_task(self_ping_loop(public_url))
 
 
 def get_current_user(token: str) -> UserContext:

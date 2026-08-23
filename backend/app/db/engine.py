@@ -6,6 +6,9 @@ _url = DATABASE_URL
 if _url and _url.startswith("postgres://"):
     _url = _url.replace("postgres://", "postgresql://", 1)
 
+if _url and ":6543" in _url:
+    _url = _url.replace(":6543", ":5432")
+
 engine = create_engine(_url, echo=False) if _url else None
 
 
