@@ -923,11 +923,17 @@ def call_model(state: AgentState, config: RunnableConfig) -> dict:
             prefetch_msg = SystemMessage(content=f"\nPRE-FETCHED DATA FOR THIS QUERY:\n{prefetch_data}\n\nUse this data to answer. Do not call tools to re-fetch it.")
             messages = list(messages) + [prefetch_msg]
 
-    sys_msg = SystemMessage(
-        content=REACT_SYSTEM_PROMPT
+    sys_msg_content = (
+        REACT_SYSTEM_PROMPT
         + f"\n\nCURRENT USER CONTEXT:\n- Role: {role}\n- Account ID: {acct}\n"
         "(Already known. Never ask the user for their account ID.)"
     )
+    
+    entities = state.get("entities", {})
+    if entities and any(entities.values()):
+        sys_msg_content += f"\n\nEXTRACTED ENTITIES FROM QUERY:\n{entities}\n(Use these exact IDs when calling lookup tools.)"
+
+    sys_msg = SystemMessage(content=sys_msg_content)
     invoke_msgs = [sys_msg] + [m for m in messages if not isinstance(m, SystemMessage)]
     response = llm.invoke(invoke_msgs)
     return {"messages": [response], "iterations": state.get("iterations", 0) + 1}
