@@ -1,5 +1,7 @@
 # ParcelPilot Copilot
 
+**Live Demo**: [https://parcelpilot-copilot.onrender.com/](https://parcelpilot-copilot.onrender.com/)
+
 An AI-powered support and operations copilot that searches authoritative documents, queries operational data, resolves conflicting sources by authority ranking, enforces account-level permissions in the tool layer, detects issues proactively, and only executes state-changing actions after human confirmation.
 
  It is a LangGraph tool-using agent with a deterministic planner, multiple tools, a conflict resolver, tool-layer ACL, policy parameter extraction from documents, and HITL confirmation.
