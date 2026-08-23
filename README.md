@@ -148,16 +148,16 @@ uvicorn app.main:app --reload --port 8000
 
 | # | Question | Expected Answer |
 |---|----------|-----------------|
-| C | Is LumenWorks eligible for a service credit on order ORD-2002? If so, what is the credit amount? | **INR 300.** Contract: fixed INR 300 if delay > 4h. Standard would be INR 240. |
-| D | LumenWorks is getting errors uploading a 4,200-row CSV (TKT-502). Does the Growth plan support this, and what is the workaround? | **5,000 rows supported.** Bug KI-208. Workaround: split below 3,000 rows. TKT-451 was wrong. |
+|  | Is LumenWorks eligible for a service credit on order ORD-2002? If so, what is the credit amount? | **INR 300.** Contract: fixed INR 300 if delay > 4h. Standard would be INR 240. |
+|  | LumenWorks is getting errors uploading a 4,200-row CSV (TKT-502). Does the Growth plan support this, and what is the workaround? | **5,000 rows supported.** Bug KI-208. Workaround: split below 3,000 rows. TKT-451 was wrong. |
 
 ### Login as `rohit.ops` (Internal Agent)
 
 | # | Question | Expected Answer |
 |---|----------|-----------------|
-| G | What should we do about Axis Labs ticket TKT-505 regarding API key exposure? | **Critical security.** Immediate escalation. Confirm card appears. |
-| N4 | What changed between the old support policy and the current one? | Compare deprecated Support Policy v2 and current Support Policy v3 (e.g. cancellation free window changes). |
-| N8 | Does Northstar have premium support? Who is their CSM? | **Yes. CSM: Priya Mehta.** |
+| | What should we do about Axis Labs ticket TKT-505 regarding API key exposure? | **Critical security.** Immediate escalation. Confirm card appears. |
+|  | What changed between the old support policy and the current one? | Compare deprecated Support Policy v2 and current Support Policy v3 (e.g. cancellation free window changes). |
+|  | Does Northstar have premium support? Who is their CSM? | **Yes. CSM: Priya Mehta.** |
 
 
 
