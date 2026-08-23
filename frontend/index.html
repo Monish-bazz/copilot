@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParcelPilot Copilot</title>
+    <link href="/static/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Role Banner -->
+    <div id="role-banner" class="hidden glass-panel">
+        <div class="banner-content">
+            <div class="user-info">
+                <span class="user-avatar" id="banner-avatar">P</span>
+                <div class="user-details">
+                    <span id="banner-name" class="font-semibold">Priya</span>
+                    <span id="banner-role" class="text-sm opacity-70">Customer (ACCT-001)</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <button id="nav-chat" class="nav-btn active">Chat</button>
+                <button id="nav-ops" class="nav-btn hidden">Ops Dashboard</button>
+                <button id="logout-btn" class="nav-btn outline">Logout</button>
+            </div>
+        </div>
+        <div class="watermark">Data as of 16 Aug 2026, 11:00 IST</div>
+    </div>
+
+    <!-- Login View -->
+    <div id="login-view" class="view-container">
+        <div class="login-header text-center">
+            <h1>ParcelPilot Copilot</h1>
+            <p>Select a demo user to continue</p>
+        </div>
+        <div class="login-cards">
+            <button class="login-card" onclick="login('priya.northstar')">
+                <h3>Priya</h3>
+                <span class="badge customer">Customer</span>
+                <p>Northstar Logistics (Enterprise)</p>
+                <small>Can read own data + docs</small>
+            </button>
+            <button class="login-card" onclick="login('arjun.lumenworks')">
+                <h3>Arjun</h3>
+                <span class="badge customer">Customer</span>
+                <p>LumenWorks (Growth)</p>
+                <small>Can read own data + docs</small>
+            </button>
+            <button class="login-card" onclick="login('rohit.ops')">
+                <h3>Rohit</h3>
+                <span class="badge internal">Internal Agent</span>
+                <p>Operations Team</p>
+                <small>Can read all, write tickets/escalations</small>
+            </button>
+            <button class="login-card" onclick="login('admin.ops')">
+                <h3>Admin</h3>
+                <span class="badge internal">Internal Admin</span>
+                <p>Operations Team</p>
+                <small>Full access + Proactive Scan</small>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat View -->
+    <div id="chat-view" class="view-container hidden">
+        <div class="chat-container glass-panel">
+            <div id="chat-messages" class="messages-area">
+                <div class="message assistant">
+                    <div class="avatar">AI</div>
+                    <div class="content">Hello! I'm your ParcelPilot Copilot. How can I help you today?</div>
+                </div>
+            </div>
+            
+            <!-- Draft / Confirm Card Placeholder (injected dynamically) -->
+            <div id="draft-container"></div>
+            
+            <div class="input-area">
+                <form id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Ask about orders, policies, or SLA..." autocomplete="off">
+                    <button type="submit" id="send-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ops View -->
+    <div id="ops-view" class="view-container hidden">
+        <div class="ops-header">
+            <h2>Proactive Issue Detection</h2>
+            <button id="scan-btn" class="primary-btn">Scan Now</button>
+        </div>
+        <div id="ops-cards" class="ops-cards-grid">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

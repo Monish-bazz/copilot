@@ -1,0 +1,37 @@
+documents:
+  - source_id: POL-V3
+    file: "01_Support_Policy_v3_CURRENT.pdf"
+    status: current
+    authority: 90
+    scope: global
+    title: "Support Policy v3 (Current)"
+  - source_id: POL-V2
+    file: "02_Support_Policy_v2_DEPRECATED.pdf"
+    status: deprecated
+    authority: 20
+    scope: global
+    title: "Support Policy v2 (Deprecated)"
+  - source_id: SOP-V4
+    file: "03_Cancellation_and_Service_Credit_SOP_v4.pdf"
+    status: current
+    authority: 85
+    scope: global
+    title: "Cancellation & Service Credit SOP v4"
+  - source_id: PROD
+    file: "04_Product_Operations_Guide_and_Known_Issues.pdf"
+    status: current
+    authority: 75
+    scope: global
+    title: "Product Operations Guide & Known Issues"
+  - source_id: CTR-NS
+    file: "05_Northstar_Logistics_Enterprise_Agreement.pdf"
+    status: current
+    authority: 100
+    scope: "ACCT-001"
+    title: "Northstar Logistics Enterprise Agreement"
+  - source_id: CTR-LW
+    file: "06_LumenWorks_Service_Agreement.pdf"
+    status: current
+    authority: 100
+    scope: "ACCT-002"
+    title: "LumenWorks Service Agreement"

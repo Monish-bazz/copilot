@@ -1,0 +1,35 @@
+# Python Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+pyenv/
+docs/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Environment Configuration & Secrets
+.env
+.env.*
+!.env.example
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
