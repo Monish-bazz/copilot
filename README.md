@@ -55,7 +55,7 @@ Open `architecture.drawio` in [draw.io]
 |-------|-----------|
 | Agent | LangGraph (Python) with `interrupt()` for HITL |
 | LLM | NVIDIA NIM (configurable model via env) |
-| Embeddings | HuggingFace `all-MiniLM-L6-v2` |
+| Embeddings | NVIDIA NIM API (`nvidia/nv-embedqa-e5-v5`) |
 | API | FastAPI with SSE streaming |
 | Frontend | Vanilla JS + HTML/CSS (dark glass UI) |
 | Documents | pdfplumber + recursive chunker → PGVector (Supabase) |
