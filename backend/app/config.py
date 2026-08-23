@@ -15,6 +15,8 @@ RAW_DIR = os.path.join(DATA_DIR, "raw")
 
 # Database
 DATABASE_URL = os.environ.get("supabase") or os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.strip("'\"")
 
 # NVIDIA NIM / LLM
 NVIDIA_API_KEY = os.environ.get("NVIDIA_NIM_API_KEY") or os.environ.get("NVIDIA_API_KEY")
