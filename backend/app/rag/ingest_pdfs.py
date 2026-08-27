@@ -25,9 +25,10 @@ def _get_db_url():
 @functools.lru_cache(maxsize=1)
 def get_vector_store():
     embeddings = NVIDIAEmbeddings(
-        model="nvidia/nv-embedqa-e5-v5",
+        model="nvidia/llama-nemotron-embed-vl-1b-v2",
         nvidia_api_key=NVIDIA_API_KEY,
         base_url=NIM_BASE_URL,
+        truncate="NONE"
     )
     db_url = _get_db_url()
 
