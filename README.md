@@ -1,5 +1,7 @@
 # ParcelPilot Copilot
 
+**Live Demo**: [https://parcelpilot-copilot.onrender.com/](https://parcelpilot-copilot.onrender.com/)
+
 An AI-powered support and operations copilot that searches authoritative documents, queries operational data, resolves conflicting sources by authority ranking, enforces account-level permissions in the tool layer, detects issues proactively, and only executes state-changing actions after human confirmation.
 
  It is a LangGraph tool-using agent with a deterministic planner, multiple tools, a conflict resolver, tool-layer ACL, policy parameter extraction from documents, and HITL confirmation.
@@ -55,7 +57,7 @@ Open `architecture.drawio` in [draw.io]
 |-------|-----------|
 | Agent | LangGraph (Python) with `interrupt()` for HITL |
 | LLM | NVIDIA NIM (configurable model via env) |
-| Embeddings | NVIDIA NIM API (`nvidia/nv-embedqa-e5-v5`) |
+| Embeddings | NVIDIA NIM API (`nvidia/llama-nemotron-embed-vl-1b-v2`) |
 | API | FastAPI with SSE streaming |
 | Frontend | Vanilla JS + HTML/CSS (dark glass UI) |
 | Documents | pdfplumber + recursive chunker → PGVector (Supabase) |
